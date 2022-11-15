@@ -20,16 +20,77 @@
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
                     <div class="col-12">
-                        <form action="{{route('admin.post.update',$post->id)}}" method="POST" class="col-2">
+                        <form action="{{route('admin.post.update',$post->id)}}" method="POST" >
                             @csrf
                             @method('PATCH')
-                            <div class="form-group">
-                                <input type="text"  class="form-control " name="title"  placeholder="Название категории" value="{{$post->title}}">
+                            @csrf
+                            <div class="form-group w-25">
+                                <label >Название</label>
+                                <input type="text"  class="form-control " name="title"  placeholder="Название поста"
+                                       value="{{$post->title}}"
+                                >
                                 @error('title')
                                 <div class="text-danger">Пустое поле </div>
                                 @enderror
                             </div>
-                            <input type="submit" class="btn btn-primary" value="Обновить">
+                            <div class="form-group">
+                                <textarea id="summernote" name="content">
+                                    {{$post->content}}
+                                </textarea>
+                                @error('content')
+                                <div class="text-danger">Пустое поле </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputFile">Добавить превью</label>
+                                <div class="w-25">
+                                    <img src="{{ public_path( $post->preview_image)}}" alt="preview_image" class="w-50">
+                                </div>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="preview_image">
+                                        <label class="custom-file-label" >Выберите фото</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Загрузка</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Добавить главное изображение</label>
+                                    <div class="w-25">
+                                        <img src="{{ public_path($post->main_image)}}" alt="main_image" class="w-50">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="main_image">
+                                            <label class="custom-file-label" >Выберите фото</label>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Загрузка</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Выберите категорию</label>
+                                    <select name="category_id"class="form-control">
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}" {{$category->id == $post->category_id ? 'selected' : ''}}>
+                                                {{$category->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Тэги</label>
+                                    <select class="select2" name="tag_ids[]" multiple="multiple" data-placeholder="Выберите тэги" style="width: 100%;">
+                                        @foreach($tags as $tag)
+                                            <option {{is_array($post->tags->pluck('id')) && in_array($tag->id,$post->tags->pluck('id')) ? 'selected' : ''}} value="{{$tag->id}}">{{$tag->title}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="Обновить">
+                                </div>
+                            </div>
                         </form>
 
                     </div>
