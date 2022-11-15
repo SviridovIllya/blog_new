@@ -28,7 +28,7 @@
                                 value="{{old('title')}}"
                                 >
                                 @error('title')
-                                <div class="text-danger">Пустое поле </div>
+                                <div class="text-danger">{{$message}} </div>
                                 @enderror
                             </div>
                             <div class="form-group">
@@ -36,7 +36,7 @@
                                     {{old('content')}}
                                 </textarea>
                                 @error('content')
-                                <div class="text-danger">Пустое поле </div>
+                                <div class="text-danger">{{$message}} </div>
                                 @enderror
                             </div>
                             <div class="form-group">
