@@ -23,7 +23,7 @@
                         <form action="{{route('admin.user.store')}}" method="POST" class="col-2">
                             @csrf
                             <div class="form-group">
-                                <label >Название</label>
+                                <label >Имя</label>
                                 <input type="text"  class="form-control " name="name"  placeholder="Имя пользователя">
                                 @error('name')
                                 <div class="text-danger">{{$message}} </div>
@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label >Название</label>
+                                <label >Email</label>
                                 <input type="text"  class="form-control " name="email"  placeholder="Email">
                                 @error('email')
                                 <div class="text-danger">{{$message}}</div>
@@ -39,11 +39,12 @@
                             </div>
 
                             <div class="form-group">
-                                <label >Название</label>
-                                <input type="text"  class="form-control " name="password"  placeholder="Пароль">
-                                @error('password')
-                                <div class="text-danger">{{$message}}</div>
-                                @enderror
+                                <label>Выберите пользователя</label>
+                                <select name="role"class="form-control">
+                                    @foreach($roles as $id => $role)
+                                        <option value="{{$id}}" {{$id == old('role_id ') ? 'selected' : ''}}>{{$role}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <input type="submit" class="btn btn-primary" value="Добавить">
                         </form>

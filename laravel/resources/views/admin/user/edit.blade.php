@@ -36,6 +36,17 @@
                                 <div class="text-danger">Пустое поле </div>
                                 @enderror
                             </div>
+                            <div class="form-group w-50">
+                                <input type="hidden" name="user_id" value="{{$user->id}}">
+                            </div>
+                            <div class="form-group">
+                                <label>Выберите пользователя</label>
+                                <select name="role"class="form-control">
+                                    @foreach($roles as $id => $role)
+                                        <option value="{{$id}}" {{$id == old('role_id ') ? 'selected' : ''}}>{{$role}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <input type="submit" class="btn btn-primary" value="Обновить">
                         </form>
 
